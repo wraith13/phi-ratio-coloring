@@ -26,8 +26,7 @@
         "skipDefaultLibCheck": true,
         "skipLibCheck": false,
         "pretty": false,
-        "noEmitOnError": true,
-        "outFile": "color.js"
+        "noEmitOnError": true
     },
     "files": [
         "color.ts"

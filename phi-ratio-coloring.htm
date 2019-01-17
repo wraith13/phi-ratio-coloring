@@ -207,7 +207,16 @@
         </div>
     </footer>
 
+    <script type="text/javascript" src="https://wraith13.github.io/evil-commonjs/index.js"></script>
+    <script>
+    //  see https://github.com/wraith13/evil-commonjs
+    module.readyToCapture();
+    </script>
     <script type="text/javascript" src="color.js"></script>
+    <script>
+    var color = module.capture("color.js").color;
+    </script>
+
     <script type="text/javascript" src="phi-ratio-coloring.js"></script>
 </body>
 </html>
