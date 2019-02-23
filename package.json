@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/wraith13/phi-ratio-coloring/issues"
   },
-  "homepage": "https://wraith13.github.io/phi-ratio-coloring/phi-ratio-coloring.htm"
+  "homepage": "https://wraith13.github.io/phi-ratio-coloring/phi-ratio-coloring.htm",
+  "dependencies": {
+    "phi-colors": "0.0.1"
+  }
 }

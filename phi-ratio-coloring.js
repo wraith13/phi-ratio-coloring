@@ -72,7 +72,7 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
         name: "phi ratio coloring",
 		description: "黄金比を利用したカラーテーブルを作成します。",
 		pi: Math.PI,
-		phi: color.phi,
+		phi: phiColors.phi,
     };
     $rootScope.title = $scope.app.name;
 
@@ -99,7 +99,7 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 	};
 
 	$scope.getRgb  = function() {
-		return color.clipRgb({r:$scope.model.r /255.0, g:$scope.model.g /255.0, b:$scope.model.b /255.0});
+		return phiColors.clipRgb({r:$scope.model.r /255.0, g:$scope.model.g /255.0, b:$scope.model.b /255.0});
 	};
 	$scope.setRgb = function(rgb) {
 		$scope.model.r = ((rgb.r *255) ^ 0);
@@ -107,7 +107,7 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 		$scope.model.b = ((rgb.b *255) ^ 0);
 	}
 	$scope.getHsl  = function() {
-		return color.regulateHsl({h:$scope.model.h, s:$scope.model.s, l:$scope.model.l});
+		return phiColors.regulateHsl({h:$scope.model.h, s:$scope.model.s, l:$scope.model.l});
 	};
 	$scope.setHsl = function(hsl) {
 		$scope.model.h = hsl.h;
@@ -120,16 +120,16 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 	};
 
 	$scope.updateCodeFromRgb  = function() {
-		$scope.model.colorCode = color.rgbForStyle($scope.getRgb());
+		$scope.model.colorCode = phiColors.rgbForStyle($scope.getRgb());
 	};
 	$scope.updateRgbFromCode  = function() {
-		$scope.setRgb(color.rgbFromStyle($scope.model.colorCode));
+		$scope.setRgb(phiColors.rgbFromStyle($scope.model.colorCode));
 	};
 	$scope.updateHslFromRgb  = function() {
-		$scope.setHsl(color.rgbToHsl($scope.getRgb()));
+		$scope.setHsl(phiColors.rgbToHsl($scope.getRgb()));
 	};
 	$scope.updateRgbFromHsl  = function() {
-		$scope.setRgb(color.hslToRgb($scope.getHsl()));
+		$scope.setRgb(phiColors.hslToRgb($scope.getHsl()));
 	};
 
 	$scope.changeCode = function() {
@@ -167,7 +167,7 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 		{
 			if ("phi ratio" === $scope.model.hueStep)
 			{
-				hsl.h += Math.PI *2 / color.phi *h;
+				hsl.h += Math.PI *2 / phiColors.phi *h;
 			}
 			else
 			{
@@ -179,14 +179,14 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 			if ("phi ratio" === $scope.model.saturationStep)
 			{
 				hsl.s = s < 0.0 ?
-					hsl.s / Math.pow(color.phi, -s):
-					color.hslSMax -((color.hslSMax - hsl.s) / Math.pow(color.phi, s));
+					hsl.s / Math.pow(phiColors.phi, -s):
+					phiColors.hslSMax -((phiColors.hslSMax - hsl.s) / Math.pow(phiColors.phi, s));
 			}
 			else
 			{
 				//	saturation を均等割する場合、saturation の初期値はガン無視する
 				var saturationResolution = Math.abs(parseInt($scope.model.saturationResolution));
-				hsl.s = ((saturationResolution +s +1.0) / ((saturationResolution *2.0) +2.0)) *color.hslSMax;
+				hsl.s = ((saturationResolution +s +1.0) / ((saturationResolution *2.0) +2.0)) *phiColors.hslSMax;
 			}
 		}
 		if (undefined !== l)
@@ -194,8 +194,8 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 			if ("phi ratio" === $scope.model.lightnessStep)
 			{
 				hsl.l = l < 0.0 ?
-					hsl.l / Math.pow(color.phi, -l):
-					1.0 -((1.0 - hsl.l) / Math.pow(color.phi, l));
+					hsl.l / Math.pow(phiColors.phi, -l):
+					1.0 -((1.0 - hsl.l) / Math.pow(phiColors.phi, l));
 			}
 			else
 			{
@@ -206,17 +206,17 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 		}
 		if ('align' === $scope.model.luma)
 		{
-			var baseLuuma = color.rgbToLuma(color.hslToRgb({h:$scope.model.h, s:$scope.model.s, l:hsl.l}));
-			var luuma = color.rgbToLuma(color.hslToRgb(hsl));
+			var baseLuuma = phiColors.rgbToLuma(phiColors.hslToRgb({h:$scope.model.h, s:$scope.model.s, l:hsl.l}));
+			var luuma = phiColors.rgbToLuma(phiColors.hslToRgb(hsl));
 			hsl.l += baseLuuma -luuma;
 		}
-		return color.regulateHsl(hsl);
+		return phiColors.regulateHsl(hsl);
 	};
 	$scope.getTextColor = function(expression) {
 		switch($scope.model.textColor)
 		{
 		case "auto":
-			return color.rgbToLuma(color.hslToRgb(expression)) < 0.5 ? "#FFFFFF": "#000000";
+			return phiColors.rgbToLuma(phiColors.hslToRgb(expression)) < 0.5 ? "#FFFFFF": "#000000";
 		case "none":
 			return "rgba(0,0,0,0)"
 		default:
@@ -235,7 +235,7 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 	$scope.calcStyleBase = function(expression) {
 		return {
 			"color": $scope.getTextColor(expression),
-			"background-color": color.rgbForStyle(color.clipRgb(color.hslToRgb(expression))),
+			"background-color": phiColors.rgbForStyle(phiColors.clipRgb(phiColors.hslToRgb(expression))),
 			"border": $scope.getBorder()
 		};
 	};
@@ -245,7 +245,7 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 	$scope.calcCode = function(h, s, l) {
 		return "none" === $scope.model.textColor ?
 			"":
-			color.rgbForStyle(color.clipRgb(color.hslToRgb($scope.calcHsl(h, s, l))));
+			phiColors.rgbForStyle(phiColors.clipRgb(phiColors.hslToRgb($scope.calcHsl(h, s, l))));
 	};
 	$scope.makeRange = function(min, max, step) {
 		if (undefined === step) {

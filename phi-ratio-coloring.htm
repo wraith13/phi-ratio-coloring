@@ -212,9 +212,9 @@
     //  see https://github.com/wraith13/evil-commonjs
     module.readyToCapture();
     </script>
-    <script type="text/javascript" src="color.js"></script>
+    <script type="text/javascript" src="node_modules/phi-colors/out/source/index.js"></script>
     <script>
-    var color = module.capture("color.js").color;
+    var color = module.capture("node_modules/phi-colors/out/source/index.js", ["phi-colors"]).phiColors;
     </script>
 
     <script type="text/javascript" src="phi-ratio-coloring.js"></script>
