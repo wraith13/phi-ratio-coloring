@@ -1,0 +1,19 @@
+{
+  "name": "phi-ratio-coloring",
+  "version": "1.0.0",
+  "description": "黄金比を利用したカラーテーブルを作成します。",
+  "main": "phi-ratio-coloring.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wraith13/phi-ratio-coloring.git"
+  },
+  "author": "wraith13",
+  "license": "BSL-1.0",
+  "bugs": {
+    "url": "https://github.com/wraith13/phi-ratio-coloring/issues"
+  },
+  "homepage": "https://wraith13.github.io/phi-ratio-coloring/phi-ratio-coloring.htm"
+}
