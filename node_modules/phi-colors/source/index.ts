@@ -245,7 +245,7 @@ export module phiColors
             a: Math.max(0.0, Math.min(1.0, expression.a)),
         }
     );
-    export const generate = (base: Hsla, h : number, s : number, l :number, a :number, isAlignLuma : boolean = true): string =>
+    export const generate = (base: Hsla, h : number, s : number, l :number, a :number, isAlignLuma : boolean = true): Hsla =>
     {
         const rgba = hslaToRgba(base);
         const hsla =
@@ -283,6 +283,6 @@ export module phiColors
             const luuma = rgbToLuma(hslToRgb(hsla));
             hsla.l += baseLuuma -luuma;
         }
-        return rgbaForStyle(hslaToRgba(hsla));
+        return hsla;
     };
 }
