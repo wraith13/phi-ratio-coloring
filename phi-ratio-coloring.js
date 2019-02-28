@@ -106,8 +106,8 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 		$scope.model.g = ((rgb.g *255) ^ 0);
 		$scope.model.b = ((rgb.b *255) ^ 0);
 	}
-	$scope.getHsl  = function() {
-		return phiColors.regulateHsl({h:$scope.model.h, s:$scope.model.s, l:$scope.model.l});
+	$scope.getHsla = function() {
+		return phiColors.regulateHsla({h:$scope.model.h, s:$scope.model.s, l:$scope.model.l, a:0.0});
 	};
 	$scope.setHsl = function(hsl) {
 		$scope.model.h = hsl.h;
@@ -129,7 +129,7 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 		$scope.setHsl(phiColors.rgbToHsl($scope.getRgb()));
 	};
 	$scope.updateRgbFromHsl  = function() {
-		$scope.setRgb(phiColors.hslToRgb($scope.getHsl()));
+		$scope.setRgb(phiColors.hslToRgb($scope.getHsla()));
 	};
 
 	$scope.changeCode = function() {
@@ -162,55 +162,38 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
 	};
 	
 	$scope.calcHsl = function(h, s, l) {
-		var hsl = $scope.getHsl();
-		if (undefined !== h)
+		var hsla = phiColors.generate
+		(
+			$scope.getHsla(),
+			"phi ratio" === $scope.model.hueStep ? h: undefined,
+			"phi ratio" === $scope.model.saturationStep ? s: undefined,
+			"phi ratio" === $scope.model.lightnessStep ? l: undefined,
+			undefined,
+			false // 本来的には 'align' === $scope.model.luma のようにするべきだが、ここで luma を align してしまうと以前と処理結果が変わってしまうので false にしておく。
+		);
+		if (undefined !== h && "phi ratio" !== $scope.model.hueStep)
 		{
-			if ("phi ratio" === $scope.model.hueStep)
-			{
-				hsl.h += Math.PI *2 / phiColors.phi *h;
-			}
-			else
-			{
-				hsl.h += Math.PI *2 *h /$scope.model.hueResolution;
-			}
+			hsla.h += Math.PI *2 *h /$scope.model.hueResolution;
 		}
-		if (undefined !== s)
+		if (undefined !== s && "phi ratio" !== $scope.model.saturationStep)
 		{
-			if ("phi ratio" === $scope.model.saturationStep)
-			{
-				hsl.s = s < 0.0 ?
-					hsl.s / Math.pow(phiColors.phi, -s):
-					phiColors.hslSMax -((phiColors.hslSMax - hsl.s) / Math.pow(phiColors.phi, s));
-			}
-			else
-			{
-				//	saturation を均等割する場合、saturation の初期値はガン無視する
-				var saturationResolution = Math.abs(parseInt($scope.model.saturationResolution));
-				hsl.s = ((saturationResolution +s +1.0) / ((saturationResolution *2.0) +2.0)) *phiColors.hslSMax;
-			}
+			//	saturation を均等割する場合、saturation の初期値はガン無視する
+			var saturationResolution = Math.abs(parseInt($scope.model.saturationResolution));
+			hsla.s = ((saturationResolution +s +1.0) / ((saturationResolution *2.0) +2.0)) *phiColors.hslSMax;
 		}
-		if (undefined !== l)
+		if (undefined !== l && "phi ratio" !== $scope.model.lightnessStep)
 		{
-			if ("phi ratio" === $scope.model.lightnessStep)
-			{
-				hsl.l = l < 0.0 ?
-					hsl.l / Math.pow(phiColors.phi, -l):
-					1.0 -((1.0 - hsl.l) / Math.pow(phiColors.phi, l));
-			}
-			else
-			{
-				//	lightness を均等割する場合、lightness の初期値はガン無視する
-				var lightnessResolution = Math.abs(parseInt($scope.model.lightnessResolution));
-				hsl.l = (lightnessResolution +l +1.0) / ((lightnessResolution *2.0) +2.0);
-			}
+			//	lightness を均等割する場合、lightness の初期値はガン無視する
+			var lightnessResolution = Math.abs(parseInt($scope.model.lightnessResolution));
+			hsla.l = (lightnessResolution +l +1.0) / ((lightnessResolution *2.0) +2.0);
 		}
 		if ('align' === $scope.model.luma)
 		{
-			var baseLuuma = phiColors.rgbToLuma(phiColors.hslToRgb({h:$scope.model.h, s:$scope.model.s, l:hsl.l}));
-			var luuma = phiColors.rgbToLuma(phiColors.hslToRgb(hsl));
-			hsl.l += baseLuuma -luuma;
+			var baseLuuma = phiColors.rgbToLuma(phiColors.hslToRgb({h:$scope.model.h, s:$scope.model.s, l:hsla.l}));
+			var luuma = phiColors.rgbToLuma(phiColors.hslToRgb(hsla));
+			hsla.l += baseLuuma -luuma;
 		}
-		return phiColors.regulateHsl(hsl);
+		return phiColors.regulateHsla(hsla);
 	};
 	$scope.getTextColor = function(expression) {
 		switch($scope.model.textColor)
