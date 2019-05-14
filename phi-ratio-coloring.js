@@ -11,55 +11,55 @@ app.config(["$locationProvider", function ($locationProvider) {
 
 app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $http, $location, $filter) {
 
-	$scope.init = function() {
-		var model = $location.search();
-		setTimeout
-		(
-			function()
-			{
-				if (model && model.colorSource)
-				{
-					$scope.model.colorSource = $scope.model.colorSource;
-					$scope.model.colorCode = model.colorCode;
-					$scope.model.r = parseInt(model.r);
-					$scope.model.g = parseInt(model.g);
-					$scope.model.b = parseInt(model.b);
-					$scope.model.h = parseFloat(model.h);
-					$scope.model.s = parseFloat(model.s);
-					$scope.model.l = parseFloat(model.l);
-					$scope.model.combination = model.combination;
-					$scope.model.luma = model.luma || "default";
-					$scope.model.hueResolution = parseInt(model.hueResolution);
-					$scope.model.hueStep = model.hueStep;
-					$scope.model.saturationResolution = parseInt(model.saturationResolution);
-					$scope.model.saturationStep = model.saturationStep;
-					$scope.model.lightnessResolution = parseInt(model.lightnessResolution);
-					$scope.model.lightnessStep = model.lightnessStep;
-					$scope.model.textColor = model.textColor;
-					$scope.model.separatorColor = model.separatorColor;
-					$scope.model.showStyle = model.showStyle;
-				}
-				switch($scope.model.colorSource)
-				{
-				case "code":
-					$scope.changeCode();
-					break;
-				case "rgb":
-					$scope.changeRgb();
-					break;
-				case "hsl":
-					$scope.changeHsl();
-					break;
-				}
-				$scope.changeShowStyle();
-			},
-			0
-		)
-	};
+    $scope.init = function() {
+        var model = $location.search();
+        setTimeout
+        (
+            function()
+            {
+                if (model && model.colorSource)
+                {
+                    $scope.model.colorSource = $scope.model.colorSource;
+                    $scope.model.colorCode = model.colorCode;
+                    $scope.model.r = parseInt(model.r);
+                    $scope.model.g = parseInt(model.g);
+                    $scope.model.b = parseInt(model.b);
+                    $scope.model.h = parseFloat(model.h);
+                    $scope.model.s = parseFloat(model.s);
+                    $scope.model.l = parseFloat(model.l);
+                    $scope.model.combination = model.combination;
+                    $scope.model.luma = model.luma || "default";
+                    $scope.model.hueResolution = parseInt(model.hueResolution);
+                    $scope.model.hueStep = model.hueStep;
+                    $scope.model.saturationResolution = parseInt(model.saturationResolution);
+                    $scope.model.saturationStep = model.saturationStep;
+                    $scope.model.lightnessResolution = parseInt(model.lightnessResolution);
+                    $scope.model.lightnessStep = model.lightnessStep;
+                    $scope.model.textColor = model.textColor;
+                    $scope.model.separatorColor = model.separatorColor;
+                    $scope.model.showStyle = model.showStyle;
+                }
+                switch($scope.model.colorSource)
+                {
+                case "code":
+                    $scope.changeCode();
+                    break;
+                case "rgb":
+                    $scope.changeRgb();
+                    break;
+                case "hsl":
+                    $scope.changeHsl();
+                    break;
+                }
+                $scope.changeShowStyle();
+            },
+            0
+        )
+    };
     $scope.alerts = [];
     $scope.clearAlert = function () {
-		$scope.alerts = [];
-	};
+        $scope.alerts = [];
+    };
     $scope.addAlert = function (alert) {
         $scope.alerts.push(alert);
     };
@@ -70,195 +70,195 @@ app.controller("phi-ratio-coloring", function ($rootScope, $window, $scope, $htt
     $scope.app = {
         type: "app",
         name: "phi ratio coloring",
-		description: "黄金比を利用したカラーテーブルを作成します。",
-		pi: Math.PI,
-		phi: phiColors.phi,
+        description: "黄金比を利用したカラーテーブルを作成します。",
+        pi: Math.PI,
+        phi: phiColors.phi,
     };
     $rootScope.title = $scope.app.name;
 
-	$scope.model = {
-		colorSource: "hsl",
-		colorCode: "#xxxxxx",
-		r: 0,
-		g: 0,
-		b: 0,
-		h: 2.399963229728654,
-		s: 0.254644007500070,
-		l: 0.381966011250105,
-		combination: "hue * lightness",
-		luma: "default",
-		hueResolution: 13,
-		hueStep: "phi ratio",
-		saturationResolution: 6,
-		saturationStep: "phi ratio",
-		lightnessResolution: 6,
-		lightnessStep: "phi ratio",
-		textColor: "auto",
-		separatorColor: "none",
-		showStyle: "default"
-	};
+    $scope.model = {
+        colorSource: "hsl",
+        colorCode: "#xxxxxx",
+        r: 0,
+        g: 0,
+        b: 0,
+        h: 2.399963229728654,
+        s: 0.254644007500070,
+        l: 0.381966011250105,
+        combination: "hue * lightness",
+        luma: "default",
+        hueResolution: 13,
+        hueStep: "phi ratio",
+        saturationResolution: 6,
+        saturationStep: "phi ratio",
+        lightnessResolution: 6,
+        lightnessStep: "phi ratio",
+        textColor: "auto",
+        separatorColor: "none",
+        showStyle: "default"
+    };
 
-	$scope.getRgb  = function() {
-		return phiColors.clipRgb({r:$scope.model.r /255.0, g:$scope.model.g /255.0, b:$scope.model.b /255.0});
-	};
-	$scope.setRgb = function(rgb) {
-		$scope.model.r = ((rgb.r *255) ^ 0);
-		$scope.model.g = ((rgb.g *255) ^ 0);
-		$scope.model.b = ((rgb.b *255) ^ 0);
-	}
-	$scope.getHsla = function() {
-		return phiColors.regulateHsla({h:$scope.model.h, s:$scope.model.s, l:$scope.model.l, a:0.0});
-	};
-	$scope.setHsl = function(hsl) {
-		$scope.model.h = hsl.h;
-		$scope.model.s = hsl.s;
-		$scope.model.l = hsl.l;
-	};
+    $scope.getRgb  = function() {
+        return phiColors.clipRgb({r:$scope.model.r /255.0, g:$scope.model.g /255.0, b:$scope.model.b /255.0});
+    };
+    $scope.setRgb = function(rgb) {
+        $scope.model.r = ((rgb.r *255) ^ 0);
+        $scope.model.g = ((rgb.g *255) ^ 0);
+        $scope.model.b = ((rgb.b *255) ^ 0);
+    }
+    $scope.getHsla = function() {
+        return phiColors.regulateHsla({h:$scope.model.h, s:$scope.model.s, l:$scope.model.l, a:0.0});
+    };
+    $scope.setHsl = function(hsl) {
+        $scope.model.h = hsl.h;
+        $scope.model.s = hsl.s;
+        $scope.model.l = hsl.l;
+    };
 
-	$scope.updateUrl = function() {
-		$location.search($scope.model);
-	};
+    $scope.updateUrl = function() {
+        $location.search($scope.model);
+    };
 
-	$scope.updateCodeFromRgb  = function() {
-		$scope.model.colorCode = phiColors.rgbForStyle($scope.getRgb());
-	};
-	$scope.updateRgbFromCode  = function() {
-		$scope.setRgb(phiColors.rgbFromStyle($scope.model.colorCode));
-	};
-	$scope.updateHslFromRgb  = function() {
-		$scope.setHsl(phiColors.rgbToHsl($scope.getRgb()));
-	};
-	$scope.updateRgbFromHsl  = function() {
-		$scope.setRgb(phiColors.hslToRgb($scope.getHsla()));
-	};
+    $scope.updateCodeFromRgb  = function() {
+        $scope.model.colorCode = phiColors.rgbForStyle($scope.getRgb());
+    };
+    $scope.updateRgbFromCode  = function() {
+        $scope.setRgb(phiColors.rgbFromStyle($scope.model.colorCode));
+    };
+    $scope.updateHslFromRgb  = function() {
+        $scope.setHsl(phiColors.rgbToHsl($scope.getRgb()));
+    };
+    $scope.updateRgbFromHsl  = function() {
+        $scope.setRgb(phiColors.hslToRgb($scope.getHsla()));
+    };
 
-	$scope.changeCode = function() {
-		$scope.model.colorSource = "code";
-		$scope.updateRgbFromCode();
-		$scope.updateHslFromRgb();
-	};
-	$scope.changeRgb = function() {
-		$scope.model.colorSource = "rbg";
-		$scope.updateCodeFromRgb();
-		$scope.updateHslFromRgb();
-	};
-	$scope.changeHsl = function() {
-		$scope.model.colorSource = "hsl";
-		$scope.updateRgbFromHsl();
-		$scope.updateCodeFromRgb();
-	};
-	$scope.changeShowStyle = function() {
-		document.body.classList.toggle("full-screen", "full screen" === $scope.model.showStyle);
-		setTimeout(function(){
-			$scope.$apply();
-		}, 0);
-	};
-	$scope.clickColorTable = function() {
-		if ("full screen" === $scope.model.showStyle)
-		{
-			$scope.model.showStyle = "default";
-			$scope.changeShowStyle();
-		}
-	};
-	
-	$scope.calcHsl = function(h, s, l) {
-		var hsla = phiColors.generate
-		(
-			$scope.getHsla(),
-			"phi ratio" === $scope.model.hueStep ? h: undefined,
-			"phi ratio" === $scope.model.saturationStep ? s: undefined,
-			"phi ratio" === $scope.model.lightnessStep ? l: undefined,
-			undefined,
-			false // 本来的には 'align' === $scope.model.luma のようにするべきだが、ここで luma を align してしまうと以前と処理結果が変わってしまうので false にしておく。
-		);
-		if (undefined !== h && "phi ratio" !== $scope.model.hueStep)
-		{
-			hsla.h += Math.PI *2 *h /$scope.model.hueResolution;
-		}
-		if (undefined !== s && "phi ratio" !== $scope.model.saturationStep)
-		{
-			//	saturation を均等割する場合、saturation の初期値はガン無視する
-			var saturationResolution = Math.abs(parseInt($scope.model.saturationResolution));
-			hsla.s = ((saturationResolution +s +1.0) / ((saturationResolution *2.0) +2.0)) *phiColors.hslSMax;
-		}
-		if (undefined !== l && "phi ratio" !== $scope.model.lightnessStep)
-		{
-			//	lightness を均等割する場合、lightness の初期値はガン無視する
-			var lightnessResolution = Math.abs(parseInt($scope.model.lightnessResolution));
-			hsla.l = (lightnessResolution +l +1.0) / ((lightnessResolution *2.0) +2.0);
-		}
-		if ('align' === $scope.model.luma)
-		{
-			var baseLuuma = phiColors.rgbToLuma(phiColors.hslToRgb({h:$scope.model.h, s:$scope.model.s, l:hsla.l}));
-			var luuma = phiColors.rgbToLuma(phiColors.hslToRgb(hsla));
-			hsla.l += baseLuuma -luuma;
-		}
-		return phiColors.regulateHsla(hsla);
-	};
-	$scope.getTextColor = function(expression) {
-		switch($scope.model.textColor)
-		{
-		case "auto":
-			return phiColors.rgbToLuma(phiColors.hslToRgb(expression)) < 0.5 ? "#FFFFFF": "#000000";
-		case "none":
-			return "rgba(0,0,0,0)"
-		default:
-			return $scope.model.textColor;
-		}
-	};
-	$scope.getBorder = function() {
-		switch($scope.model.separatorColor)
-		{
-		case "none":
-			return "none"
-		default:
-			return "4px solid " +$scope.model.separatorColor;
-		}
-	};
-	$scope.calcStyleBase = function(expression) {
-		return {
-			"color": $scope.getTextColor(expression),
-			"background-color": phiColors.rgbForStyle(phiColors.clipRgb(phiColors.hslToRgb(expression))),
-			"border": $scope.getBorder()
-		};
-	};
-	$scope.calcStyle = function(h, s, l) {
-		return $scope.calcStyleBase($scope.calcHsl(h, s, l));
-	};
-	$scope.calcCode = function(h, s, l) {
-		return "none" === $scope.model.textColor ?
-			"":
-			phiColors.rgbForStyle(phiColors.clipRgb(phiColors.hslToRgb($scope.calcHsl(h, s, l))));
-	};
-	$scope.makeRange = function(min, max, step) {
-		if (undefined === step) {
-			return $scope.makeRange(min, max, 1)
-		} else {
-			var result = [];
-			var i = min;
-			if (min !== max)
-			{
-				if (min <= max)
-				{
-					do {
-						result.push(i);
-						i += step;
-					} while(i < max);
-				}
-				else
-				{
-					do {
-						result.push(i);
-						i -= step;
-					} while(max < i);
-				}
-			}
-			result.push(max);
-			return result;
-		}
-	}
-	$scope.setFullScreen = function() {
-		$scope.model.showStyle='full screen';
-		$scope.changeShowStyle();
-	};
+    $scope.changeCode = function() {
+        $scope.model.colorSource = "code";
+        $scope.updateRgbFromCode();
+        $scope.updateHslFromRgb();
+    };
+    $scope.changeRgb = function() {
+        $scope.model.colorSource = "rbg";
+        $scope.updateCodeFromRgb();
+        $scope.updateHslFromRgb();
+    };
+    $scope.changeHsl = function() {
+        $scope.model.colorSource = "hsl";
+        $scope.updateRgbFromHsl();
+        $scope.updateCodeFromRgb();
+    };
+    $scope.changeShowStyle = function() {
+        document.body.classList.toggle("full-screen", "full screen" === $scope.model.showStyle);
+        setTimeout(function(){
+            $scope.$apply();
+        }, 0);
+    };
+    $scope.clickColorTable = function() {
+        if ("full screen" === $scope.model.showStyle)
+        {
+            $scope.model.showStyle = "default";
+            $scope.changeShowStyle();
+        }
+    };
+    
+    $scope.calcHsl = function(h, s, l) {
+        var hsla = phiColors.generate
+        (
+            $scope.getHsla(),
+            "phi ratio" === $scope.model.hueStep ? h: undefined,
+            "phi ratio" === $scope.model.saturationStep ? s: undefined,
+            "phi ratio" === $scope.model.lightnessStep ? l: undefined,
+            undefined,
+            false // 本来的には 'align' === $scope.model.luma のようにするべきだが、ここで luma を align してしまうと以前と処理結果が変わってしまうので false にしておく。
+        );
+        if (undefined !== h && "phi ratio" !== $scope.model.hueStep)
+        {
+            hsla.h += Math.PI *2 *h /$scope.model.hueResolution;
+        }
+        if (undefined !== s && "phi ratio" !== $scope.model.saturationStep)
+        {
+            //    saturation を均等割する場合、saturation の初期値はガン無視する
+            var saturationResolution = Math.abs(parseInt($scope.model.saturationResolution));
+            hsla.s = ((saturationResolution +s +1.0) / ((saturationResolution *2.0) +2.0)) *phiColors.hslSMax;
+        }
+        if (undefined !== l && "phi ratio" !== $scope.model.lightnessStep)
+        {
+            //    lightness を均等割する場合、lightness の初期値はガン無視する
+            var lightnessResolution = Math.abs(parseInt($scope.model.lightnessResolution));
+            hsla.l = (lightnessResolution +l +1.0) / ((lightnessResolution *2.0) +2.0);
+        }
+        if ('align' === $scope.model.luma)
+        {
+            var baseLuuma = phiColors.rgbToLuma(phiColors.hslToRgb({h:$scope.model.h, s:$scope.model.s, l:hsla.l}));
+            var luuma = phiColors.rgbToLuma(phiColors.hslToRgb(hsla));
+            hsla.l += baseLuuma -luuma;
+        }
+        return phiColors.regulateHsla(hsla);
+    };
+    $scope.getTextColor = function(expression) {
+        switch($scope.model.textColor)
+        {
+        case "auto":
+            return phiColors.rgbToLuma(phiColors.hslToRgb(expression)) < 0.5 ? "#FFFFFF": "#000000";
+        case "none":
+            return "rgba(0,0,0,0)"
+        default:
+            return $scope.model.textColor;
+        }
+    };
+    $scope.getBorder = function() {
+        switch($scope.model.separatorColor)
+        {
+        case "none":
+            return "none"
+        default:
+            return "4px solid " +$scope.model.separatorColor;
+        }
+    };
+    $scope.calcStyleBase = function(expression) {
+        return {
+            "color": $scope.getTextColor(expression),
+            "background-color": phiColors.rgbForStyle(phiColors.clipRgb(phiColors.hslToRgb(expression))),
+            "border": $scope.getBorder()
+        };
+    };
+    $scope.calcStyle = function(h, s, l) {
+        return $scope.calcStyleBase($scope.calcHsl(h, s, l));
+    };
+    $scope.calcCode = function(h, s, l) {
+        return "none" === $scope.model.textColor ?
+            "":
+            phiColors.rgbForStyle(phiColors.clipRgb(phiColors.hslToRgb($scope.calcHsl(h, s, l))));
+    };
+    $scope.makeRange = function(min, max, step) {
+        if (undefined === step) {
+            return $scope.makeRange(min, max, 1)
+        } else {
+            var result = [];
+            var i = min;
+            if (min !== max)
+            {
+                if (min <= max)
+                {
+                    do {
+                        result.push(i);
+                        i += step;
+                    } while(i < max);
+                }
+                else
+                {
+                    do {
+                        result.push(i);
+                        i -= step;
+                    } while(max < i);
+                }
+            }
+            result.push(max);
+            return result;
+        }
+    }
+    $scope.setFullScreen = function() {
+        $scope.model.showStyle='full screen';
+        $scope.changeShowStyle();
+    };
 });

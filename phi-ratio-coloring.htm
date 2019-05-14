@@ -108,94 +108,94 @@
             </uib-alert>
 
             <div ng-hide="is_loading">
-				<div class="row">
-					<div class="col-md-3">
-						<h4>color code</h4>
-						<input type="text" class="form-control" ng-model="model.colorCode" ng-change="changeCode()" />
-					</div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4>color code</h4>
+                        <input type="text" class="form-control" ng-model="model.colorCode" ng-change="changeCode()" />
+                    </div>
                     <div class="col-md-3" style="padding-top:1.5em;">
                         ※ original hsl model ( actually this is close to the luma/chroma/hue model )
-					</div>
-					<div class="col-md-3">
-						<h4>combination</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <h4>combination</h4>
                         <select class="form-control" ng-model="model.combination" ng-options="item for item in ['hue * lightness', 'hue * saturation', 'saturation * lightness']"></select>
-					</div>
-					<div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
                         <h4>luma</h4>
                         <select class="form-control" ng-model="model.luma" ng-options="item for item in ['default', 'align']"></select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<h4>R value ( 0 ～ 255 )</h4>
-						<input type="number" class="form-control" ng-model="model.r" ng-change="changeRgb()"/>
-						<h4>G value ( 0 ～ 255 )</h4>
-						<input type="number" class="form-control" ng-model="model.g" ng-change="changeRgb()" />
-						<h4>B value ( 0 ～ 255 )</h4>
-						<input type="number" class="form-control" ng-model="model.b" ng-change="changeRgb()" />
-					</div>
-					<div class="col-md-3">
-						<h4>H value ( -π ～ π )</h4>
-						<input type="number" class="form-control" ng-model="model.h" ng-change="changeHsl()" />
-						<h4>S value ( 0.0 ～ 2.0/3.0 )</h4>
-						<input type="number" class="form-control" ng-model="model.s" ng-change="changeHsl()" />
-						<h4>L value ( 0.0 ～ 1.0 )</h4>
-						<input type="number" class="form-control" ng-model="model.l" ng-change="changeHsl()" />
-					</div>
-					<div class="col-md-3">
-						<h4>hue resolution</h4>
-						<input type="number" class="form-control" ng-model="model.hueResolution" ng-disabled="'saturation * lightness' === model.combination" />
-						<h4>saturation resolution</h4>
-						<input type="number" class="form-control" ng-model="model.saturationResolution" ng-disabled="'hue * lightness' === model.combination" />
-						<h4>lightness resolution</h4>
-						<input type="number" class="form-control" ng-model="model.lightnessResolution" ng-disabled="'hue * saturation' === model.combination" />
-					</div>
-					<div class="col-md-3">
-						<h4>hue step</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4>R value ( 0 ～ 255 )</h4>
+                        <input type="number" class="form-control" ng-model="model.r" ng-change="changeRgb()"/>
+                        <h4>G value ( 0 ～ 255 )</h4>
+                        <input type="number" class="form-control" ng-model="model.g" ng-change="changeRgb()" />
+                        <h4>B value ( 0 ～ 255 )</h4>
+                        <input type="number" class="form-control" ng-model="model.b" ng-change="changeRgb()" />
+                    </div>
+                    <div class="col-md-3">
+                        <h4>H value ( -π ～ π )</h4>
+                        <input type="number" class="form-control" ng-model="model.h" ng-change="changeHsl()" />
+                        <h4>S value ( 0.0 ～ 2.0/3.0 )</h4>
+                        <input type="number" class="form-control" ng-model="model.s" ng-change="changeHsl()" />
+                        <h4>L value ( 0.0 ～ 1.0 )</h4>
+                        <input type="number" class="form-control" ng-model="model.l" ng-change="changeHsl()" />
+                    </div>
+                    <div class="col-md-3">
+                        <h4>hue resolution</h4>
+                        <input type="number" class="form-control" ng-model="model.hueResolution" ng-disabled="'saturation * lightness' === model.combination" />
+                        <h4>saturation resolution</h4>
+                        <input type="number" class="form-control" ng-model="model.saturationResolution" ng-disabled="'hue * lightness' === model.combination" />
+                        <h4>lightness resolution</h4>
+                        <input type="number" class="form-control" ng-model="model.lightnessResolution" ng-disabled="'hue * saturation' === model.combination" />
+                    </div>
+                    <div class="col-md-3">
+                        <h4>hue step</h4>
                         <select class="form-control" ng-model="model.hueStep" ng-options="item for item in ['phi ratio', 'equal share']" ng-disabled="'saturation * lightness' === model.combination" ></select>
                         <h4>saturation step</h4>
                         <select class="form-control" ng-model="model.saturationStep" ng-options="item for item in ['phi ratio', 'equal share']" ng-disabled="'hue * lightness' === model.combination" ></select>
                         <h4>lightness step</h4>
                         <select class="form-control" ng-model="model.lightnessStep" ng-options="item for item in ['phi ratio', 'equal share']" ng-disabled="'hue * saturation' === model.combination" ></select>
-					</div>
+                    </div>
                 </div>
-				<div class="row">
-					<div class="col-md-3">
-						<h4>code text color</h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4>code text color</h4>
                         <select class="form-control" ng-model="model.textColor" ng-options="item for item in ['auto', 'white', 'black', 'none']" ></select>
-					</div>
-					<div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
                         <h4>separator color</h4>
                         <select class="form-control" ng-model="model.separatorColor" ng-options="item for item in ['white', 'black', 'none']" ></select>
-					</div>
-					<div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
                         <h4>&nbsp;</h4>
                         <button class="form-control btn-primary" ng-click="setFullScreen()">full screen</button>
-					</div>
-					<div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
                         <h4>&nbsp;</h4>
                         <button class="form-control btn-danger" onclick="window.location='?'">reset</button>
-					</div>
+                    </div>
                 </div>
                 {{updateUrl() || ""}}
             </div>
         </div>
-		<div ng-click="clickColorTable()">
-			<table ng-show="'saturation * lightness' === model.combination" class="color">
-				<tr ng-repeat="s in makeRange(-model.saturationResolution, model.saturationResolution)">
-					<td ng-repeat="l in makeRange(-model.lightnessResolution, model.lightnessResolution)"  ng-style="calcStyle(undefined, s, l)">{{calcCode(undefined, s, l)}}</td>
-				</tr>
-			</table>
-			<table ng-show="'hue * lightness' === model.combination" class="color">
-				<tr ng-repeat="h in makeRange(0, model.hueResolution -1)">
-					<td ng-repeat="l in makeRange(-model.lightnessResolution, model.lightnessResolution)"  ng-style="calcStyle(h, undefined, l)">{{calcCode(h, undefined, l)}}</td>
-				</tr>
-			</table>
-			<table ng-show="'hue * saturation' === model.combination" class="color">
-				<tr ng-repeat="h in makeRange(0, model.hueResolution -1)">
-					<td ng-repeat="s in makeRange(-model.saturationResolution, model.saturationResolution)"  ng-style="calcStyle(h, s, undefined)">{{calcCode(h, s, undefined)}}</td>
-				</tr>
-			</table>
+        <div ng-click="clickColorTable()">
+            <table ng-show="'saturation * lightness' === model.combination" class="color">
+                <tr ng-repeat="s in makeRange(-model.saturationResolution, model.saturationResolution)">
+                    <td ng-repeat="l in makeRange(-model.lightnessResolution, model.lightnessResolution)"  ng-style="calcStyle(undefined, s, l)">{{calcCode(undefined, s, l)}}</td>
+                </tr>
+            </table>
+            <table ng-show="'hue * lightness' === model.combination" class="color">
+                <tr ng-repeat="h in makeRange(0, model.hueResolution -1)">
+                    <td ng-repeat="l in makeRange(-model.lightnessResolution, model.lightnessResolution)"  ng-style="calcStyle(h, undefined, l)">{{calcCode(h, undefined, l)}}</td>
+                </tr>
+            </table>
+            <table ng-show="'hue * saturation' === model.combination" class="color">
+                <tr ng-repeat="h in makeRange(0, model.hueResolution -1)">
+                    <td ng-repeat="s in makeRange(-model.saturationResolution, model.saturationResolution)"  ng-style="calcStyle(h, s, undefined)">{{calcCode(h, s, undefined)}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 
